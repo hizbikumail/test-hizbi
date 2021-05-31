@@ -1,7 +1,5 @@
 package id.co.bfi.test.query.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +16,5 @@ public class CategoriQueryService {
 
 	public Page<Categori> findAll(Pageable pageable) {
 		return action.findAll(pageable);
-	}
-
-	public Optional<Categori> findById(int id) {
-		return action.findById(id);
 	}
 }

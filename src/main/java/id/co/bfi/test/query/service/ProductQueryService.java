@@ -1,7 +1,5 @@
 package id.co.bfi.test.query.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +17,4 @@ public class ProductQueryService {
 	public Page<Product> findAll(Pageable pageable) {
 		return queryAction.findAll(pageable);
 	}
-
-	public Optional<Product> findById(int id) {
-		return queryAction.findById(id);
-	}
-
 }

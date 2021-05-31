@@ -7,8 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +30,6 @@ public class Product {
 	@Column(name = "supplier_id", nullable = false)
 	private int supplierId;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
 	private Categori categori;

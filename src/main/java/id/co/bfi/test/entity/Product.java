@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,7 @@ public class Product {
 
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
+	@JsonIgnoreProperties("product")
 	private Categori categori;
 
 	@Column(name = "quantity_per_unit", nullable = false)

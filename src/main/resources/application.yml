@@ -1,0 +1,13 @@
+spring:
+  main:
+    banner-mode: OFF
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgre
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none

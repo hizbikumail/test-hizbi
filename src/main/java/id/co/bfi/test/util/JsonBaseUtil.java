@@ -14,7 +14,7 @@ public class JsonBaseUtil {
 
 		body.setPage(pageFromSpring.getPageable().getPageNumber());
 		body.setSize(pageFromSpring.getPageable().getPageSize());
-		body.setRecords(pageFromSpring.getContent());
+		body.setData(pageFromSpring.getContent());
 		body.setTotalPage(pageFromSpring.getTotalPages());
 		body.setTotalRecords(pageFromSpring.getTotalElements());
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+	version="1.0">
+
+	<!-- 1. name is [EntityClassName].[method name in repository] 2. name is 
+		not the repository class name (XxxRepository), just the entity (Xxx) 3. result-class 
+		is fully qualified name (includes package) for entity class -->
+	<named-native-query
+		name="Categori.findCategoriPaging"
+		result-class="id.co.bfi.test.entity.Categori">
+		<query>
+	select * from public.categories cat order by
+	case when :orderBy = 'categori_id asc' then category_id end asc,
+	case when :orderBy = 'category_id desc' then category_id end desc,
+	case when :orderBy = 'category_name asc' then category_name end asc,
+	case when :orderBy = 'category_name desc' then category_name end desc limit :Limit offset :Offset
+		</query>
+	</named-native-query>
+	
+	<named-native-query
+		name="Categori.findByIdCategori"
+		result-class="id.co.bfi.test.entity.Categori">
+		<query>
+			select * from public.categories cat where cat.category_id = :id
+		</query>
+	</named-native-query>
+	
+	<named-native-query
+		name="Categori.findByNameCategori"
+		result-class="id.co.bfi.test.entity.Categori">
+		<query>
+			select * from public.categories cat where cat.category_name = :name
+		</query>
+	</named-native-query>
+</entity-mappings>

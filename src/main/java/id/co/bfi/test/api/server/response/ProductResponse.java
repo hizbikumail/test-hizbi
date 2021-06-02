@@ -1,8 +1,6 @@
 package id.co.bfi.test.api.server.response;
 
-import java.util.List;
-
-import id.co.bfi.test.entity.Product;
+import id.co.bfi.test.entity.Categori;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CategoriResponse {
+public class ProductResponse {
 
-	private int categoriId;
-	private String categoriName;
-	private List<Product> product;
+	private int productId;
+	private String productName;
+	private float unitPrice;
+	private Categori categori;
+
 }

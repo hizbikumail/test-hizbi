@@ -10,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import id.co.bfi.test.api.server.response.CategoriResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,7 +37,12 @@ public class Categori {
 	private String description;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "categori")
-	@JsonIgnoreProperties("categori")
+	@JsonIgnore
 	private List<Product> product;
+
+	public CategoriResponse toResponse() {
+		return CategoriResponse.builder().categoriId(categoryId).categoriName(categoryName).product(getProduct())
+				.build();
+	}
 
 }

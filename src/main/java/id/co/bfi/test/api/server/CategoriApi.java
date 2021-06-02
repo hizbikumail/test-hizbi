@@ -1,9 +1,8 @@
-package id.co.bfi.test.api;
+package id.co.bfi.test.api.server;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import id.co.bfi.test.api.server.request.CategoriRequest;
+import id.co.bfi.test.api.server.response.CategoriResponse;
 import id.co.bfi.test.api.server.response.base.JsonBasePage;
 import id.co.bfi.test.api.server.response.base.JsonBaseResponse;
 import id.co.bfi.test.command.service.CategoriCommandService;
-import id.co.bfi.test.entity.Categori;
 import id.co.bfi.test.query.service.CategoriQueryService;
-import id.co.bfi.test.repository.CategoriRepository;
-import id.co.bfi.test.util.JsonBaseUtil;
 
 @RestController
 @RequestMapping("/api/categori")
@@ -34,9 +31,6 @@ public class CategoriApi {
 	@Autowired
 	private CategoriQueryService queryService;
 
-	@Autowired
-	private CategoriRepository repository;
-
 	@PostMapping(value = { "",
 			"/" }, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String create(@RequestBody(required = true) CategoriRequest request) {
@@ -45,17 +39,17 @@ public class CategoriApi {
 		return "Saved as ID " + saved.getCategoryId();
 	}
 
-	@GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
-	public JsonBaseResponse<JsonBasePage<Categori>> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "10") int size) {
-		var startTime = System.currentTimeMillis();
-
-		var pageRequest = PageRequest.of(page, size);
-		var fromSpring = queryService.findAll(pageRequest);
-		var body = JsonBaseUtil.toJsonBasePage(fromSpring);
-
-		return new JsonBaseResponse<>(startTime, body);
-	}
+//	@GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public JsonBaseResponse<JsonBasePage<Categori>> findAll(@RequestParam(name = "page", defaultValue = "0") int page,
+//			@RequestParam(name = "size", defaultValue = "10") int size) {
+//		var startTime = System.currentTimeMillis();
+//
+//		var pageRequest = PageRequest.of(page, size);
+//		var fromSpring = queryService.findAll(pageRequest);
+//		var body = JsonBaseUtil.toJsonBasePage(fromSpring);
+//
+//		return new JsonBaseResponse<>(startTime, body);
+//	}
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String updateCategories(@PathVariable(required = true, name = "id") int id,
@@ -72,7 +66,34 @@ public class CategoriApi {
 	}
 
 	@GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Optional<Categori> findById(@PathVariable(required = true, name = "id") int id) {
-		return repository.findById(id);
+	public JsonBaseResponse<List<CategoriResponse>> findById(@PathVariable(name = "id") int id) {
+		var startTime = System.currentTimeMillis();
+		var responseService = queryService.getCategoriById(id);
+
+		return new JsonBaseResponse<>(startTime, responseService);
+	}
+
+	@GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonBaseResponse<JsonBasePage<CategoriResponse>> getCategoriPaging(
+			@RequestParam(name = "limit", required = true, defaultValue = "10") int limit,
+			@RequestParam(name = "offset", required = true, defaultValue = "0") int offset) {
+
+		return queryService.getCategoriPaging(limit, offset);
+	}
+
+	@GetMapping(value = "/findBynative/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonBaseResponse<List<CategoriResponse>> findByNativeId(@PathVariable(name = "id") int id) {
+		var startTime = System.currentTimeMillis();
+		var responseService = queryService.findByIdCategori(id);
+
+		return new JsonBaseResponse<>(startTime, responseService);
+	}
+
+	@GetMapping(value = "/findbynativename/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonBaseResponse<List<CategoriResponse>> findByNativeName(@PathVariable(name = "name") String name) {
+		var startTime = System.currentTimeMillis();
+		var responseService = queryService.findByNameCategori(name);
+
+		return new JsonBaseResponse<>(startTime, responseService);
 	}
 }

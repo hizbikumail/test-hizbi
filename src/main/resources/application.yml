@@ -9,5 +9,9 @@ spring:
     password: postgre
   jpa:
     show-sql: false
+    mapping-resources:
+    - queries/CategoriSql.xml
+    - queries/ProductSql.xml
+    
     hibernate:
       ddl-auto: none

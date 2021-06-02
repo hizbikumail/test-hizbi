@@ -1,4 +1,5 @@
 package id.co.bfi.test.api.server.response.base;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +28,6 @@ public class JsonBasePage<T> {
 
 	private long totalRecords;
 
-	private List<T> records;
+	private List<T> data;
 
 }
